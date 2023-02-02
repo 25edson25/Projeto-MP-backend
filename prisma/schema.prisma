@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.db"
+}
+
+model Papel {
+  id Int @id
+  descricao String //Admin, Professor, Aluno
+  usuario Usuario[]
+}
+
+model Usuario {
+  cpf String @id
+  nome String
+  email String @unique
+  senha String
+  dataNascimento DateTime
+  
+  role Papel[]
+  questoes Questao[]
+}
+
+model CertoOuErrado {
+  id Int @id
+  gabarito Boolean
+}
+
+model ValorExato {
+  id Int @id
+  gabarito Int
+}
+
+model Questao{
+id Int @id
+descricao String
+
+cpfAutor String
+autor Usuario @relation(fields:[cpfAutor], references:[cpf])
+}
+
+model Prova{
+  id Int @id
+  horarioInicio DateTime
+  horarioFim DateTime
+}
+
+model Turma{
+  id Int @id
+  dataInicio DateTime
+  dataFim DateTime
+
+}
+
+model MultiplaEscolha{
+  id Int @id
+  itemA String
+  itemB String
+  itemC String
+  itemD String
+
+  idGabarito Int
+  gabarito Opcao @relation(fields:[idGabarito], references: [id])
+}
+
+model Opcao {
+  id Int @id
+  descricao String //A, B, C, D
+  questao MultiplaEscolha[]
+}
