@@ -23,7 +23,7 @@ model Usuario {
   senha String
   dataNascimento DateTime
   
-  role Papel[]
+  roles Papel[]
   questoes Questao[]
 }
 
@@ -39,7 +39,7 @@ model ValorExato {
 
 model Questao{
 id Int @id
-descricao String
+enunciado String
 
 cpfAutor String
 autor Usuario @relation(fields:[cpfAutor], references:[cpf])
