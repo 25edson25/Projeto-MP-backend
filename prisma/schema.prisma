@@ -32,11 +32,16 @@ model Usuario {
 model CertoOuErrado {
   id Int @id
   gabarito Boolean
+  idQuestao Int @unique
+  questao Questao @relation(fields:[idQuestao], references:[id]) 
 }
 
 model ValorExato {
   id Int @id
   gabarito Int
+  
+  idQuestao Int @unique
+  questao Questao @relation(fields:[idQuestao], references:[id]) 
 }
 
 model Questao{
@@ -45,6 +50,10 @@ enunciado String
 
 cpfAutor String
 autor Usuario @relation(fields:[cpfAutor], references:[cpf])
+
+certoOuErrado CertoOuErrado?
+valorExato ValorExato?
+multiplaEscolha MultiplaEscolha?
 }
 
 model Prova{
@@ -73,6 +82,9 @@ model MultiplaEscolha{
 
   idGabarito Int
   gabarito Opcao @relation(fields:[idGabarito], references: [id])
+  
+  idQuestao Int @unique
+  questao Questao @relation(fields:[idQuestao], references:[id]) 
 }
 
 model Opcao {
