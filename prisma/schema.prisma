@@ -45,21 +45,26 @@ model ValorExato {
 }
 
 model Questao{
-id Int @id
-enunciado String
+  id Int @id
+  enunciado String
 
-cpfAutor String
-autor Usuario @relation(fields:[cpfAutor], references:[cpf])
+  cpfAutor String
+  autor Usuario @relation(fields:[cpfAutor], references:[cpf])
 
-certoOuErrado CertoOuErrado?
-valorExato ValorExato?
-multiplaEscolha MultiplaEscolha?
+  certoOuErrado CertoOuErrado?
+  valorExato ValorExato?
+  multiplaEscolha MultiplaEscolha?
+
+  provas Prova[]
 }
 
 model Prova{
   id Int @id
   horarioInicio DateTime
   horarioFim DateTime
+  
+  questoes Questao[]
+  turmas Turma[]
 }
 
 model Turma{
@@ -71,6 +76,8 @@ model Turma{
   
   cpfProfessor String
   professor Usuario @relation("professor", fields:[cpfProfessor], references:[cpf])
+  
+  provas Prova[]
 }
 
 model MultiplaEscolha{
