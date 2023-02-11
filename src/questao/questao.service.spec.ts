@@ -45,7 +45,7 @@ const fakeValorExato: Prisma.QuestaoGetPayload<{
 };
 
 const prismaMock = {
-  valorExato: {
+  questao: {
     create: jest
       .fn()
       .mockReturnValue(fakeMultiplaEscolha)
