@@ -3,6 +3,7 @@ import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
+  CreateExactValue,
   CreateMultipleChoice,
   CreateTrueOrFalse,
 } from './dto/create-questao.dto';
@@ -41,6 +42,18 @@ export class QuestaoService extends getCrud<
         },
       },
       include: { certoOuErrado: true },
+    });
+  }
+
+  async createExactValue(createExactValue: CreateExactValue) {
+    return await this.prisma.questao.create({
+      data: {
+        ...createExactValue,
+        valorExato: {
+          create: { ...createExactValue.valorExato },
+        },
+      },
+      include: { valorExato: true },
     });
   }
 }
