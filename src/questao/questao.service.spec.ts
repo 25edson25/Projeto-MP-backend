@@ -86,4 +86,31 @@ describe('Questao', () => {
       expect(response).toEqual(fakeMultiplaEscolha);
     });
   });
+
+  describe('createCertoOuErrado', () => {
+    beforeEach(async () => {
+      {
+        const module = await Test.createTestingModule({
+          providers: [
+            QuestaoService,
+            {
+              provide: PrismaService,
+              useValue: prismaMock(fakeCertoOuErrado),
+            },
+          ],
+        }).compile();
+        service = module.get<QuestaoService>(QuestaoService);
+      }
+    });
+    it('should return a CertoOuErrado Question', async () => {
+      const response = await service.createTrueOrFalse({
+        cpfAutor: '98754351064',
+        enunciado: 'Julgue o item: 1+1=3',
+        certoOuErrado: {
+          gabarito: false,
+        },
+      });
+      expect(response).toEqual(fakeCertoOuErrado);
+    });
+  });
 });
