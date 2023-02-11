@@ -57,7 +57,7 @@ describe('Questao', () => {
   });
 
   describe('createMultiplaEscolha', () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
       {
         const module = await Test.createTestingModule({
           providers: [
@@ -88,7 +88,7 @@ describe('Questao', () => {
   });
 
   describe('createCertoOuErrado', () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
       {
         const module = await Test.createTestingModule({
           providers: [
@@ -111,6 +111,32 @@ describe('Questao', () => {
         },
       });
       expect(response).toEqual(fakeCertoOuErrado);
+    });
+  });
+  describe('createValorExato', () => {
+    beforeAll(async () => {
+      {
+        const module = await Test.createTestingModule({
+          providers: [
+            QuestaoService,
+            {
+              provide: PrismaService,
+              useValue: prismaMock(fakeValorExato),
+            },
+          ],
+        }).compile();
+        service = module.get<QuestaoService>(QuestaoService);
+      }
+    });
+    it('should return a Exact Value Question', async () => {
+      const response = await service.createExactValue({
+        cpfAutor: '63892263849',
+        enunciado: 'Quanto é 2+2?',
+        valorExato: {
+          gabarito: 4,
+        },
+      });
+      expect(response).toEqual(fakeValorExato);
     });
   });
 });
