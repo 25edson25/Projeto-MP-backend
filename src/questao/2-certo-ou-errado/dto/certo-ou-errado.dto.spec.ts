@@ -1,10 +1,10 @@
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { CreateQuestaoDto } from './create-questao.dto';
+import { CreateCertoOuErradoDto } from './create-certo-ou-errado.dto';
 
-describe('Create Question ', () => {
+describe('Create Multiple Choice Dto', () => {
   it('should not be empty', async () => {
-    const dto = plainToInstance(CreateQuestaoDto, {});
+    const dto = plainToInstance(CreateCertoOuErradoDto, {});
     const errors = await validate(dto);
     expect(errors.length).not.toBe(0);
   });

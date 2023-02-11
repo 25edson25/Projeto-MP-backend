@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { QuestaoService } from './questao.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { CreateTrueOrFalse } from './dto/create-questao.dto';
 
 const fakeMultiplaEscolha: Prisma.QuestaoGetPayload<{
   include: { multiplaEscolha: true };
