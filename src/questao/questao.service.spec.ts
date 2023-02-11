@@ -44,33 +44,33 @@ const fakeValorExato: Prisma.QuestaoGetPayload<{
   },
 };
 
-const prismaMock = {
+const prismaMock = (returnValue) => ({
   questao: {
-    create: jest
-      .fn()
-      .mockReturnValue(fakeMultiplaEscolha)
-      .mockReturnValue(fakeCertoOuErrado)
-      .mockReturnValue(fakeValorExato),
+    create: jest.fn().mockReturnValue(returnValue),
   },
-};
+});
 describe('Questao', () => {
   let service: QuestaoService;
-
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [
-        QuestaoService,
-        { provide: PrismaService, useValue: prismaMock },
-      ],
-    }).compile();
-    service = module.get<QuestaoService>(QuestaoService);
-  });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe('createMultiplaEscolha', () => {
+    beforeEach(async () => {
+      {
+        const module = await Test.createTestingModule({
+          providers: [
+            QuestaoService,
+            {
+              provide: PrismaService,
+              useValue: prismaMock(fakeMultiplaEscolha),
+            },
+          ],
+        }).compile();
+        service = module.get<QuestaoService>(QuestaoService);
+      }
+    });
     it('should return a Multiple Choice Question', async () => {
       const response = await service.createMultipleChoice({
         cpfAutor: '05234142475',

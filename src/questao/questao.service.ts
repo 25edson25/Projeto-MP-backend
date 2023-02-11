@@ -1,0 +1,31 @@
+import { Injectable } from '@nestjs/common';
+import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateMultipleChoice } from './dto/create-questao.dto';
+
+type QuestaoModel = Prisma.QuestaoDelegate<RejectOptions>;
+const { defaultOptions, getCrud } = new CrudOptions<QuestaoModel>().setOptions(
+  {},
+);
+
+@Injectable()
+export class QuestaoService extends getCrud<
+  Prisma.QuestaoGetPayload<typeof defaultOptions>
+>() {
+  constructor(protected readonly prisma: PrismaService) {
+    super(prisma.questao, defaultOptions);
+  }
+
+  async createMultipleChoice(createMultipleChoice: CreateMultipleChoice) {
+    return await this.prisma.questao.create({
+      data: {
+        ...createMultipleChoice,
+        multiplaEscolha: {
+          create: { ...createMultipleChoice.multiplaEscolha },
+        },
+      },
+      include: { multiplaEscolha: true },
+    });
+  }
+}
