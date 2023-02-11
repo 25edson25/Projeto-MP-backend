@@ -10,8 +10,13 @@ datasource db {
   url      = "file:./database.db"
 }
 
+//generator crud {
+//  provider = "prisma-generator-nestjs-crud"
+//  output = "../src"
+//}
+
 model Papel {
-  id Int @id
+  id Int @id @default(autoincrement())
   descricao String //Admin, Professor, Aluno
   usuario Usuario[]
 }
@@ -30,14 +35,14 @@ model Usuario {
 }
 
 model CertoOuErrado {
-  id Int @id
+  id Int @id @default(autoincrement())
   gabarito Boolean
   idQuestao Int @unique
   questao Questao @relation(fields:[idQuestao], references:[id]) 
 }
 
 model ValorExato {
-  id Int @id
+  id Int @id @default(autoincrement())
   gabarito Int
   
   idQuestao Int @unique
@@ -45,7 +50,7 @@ model ValorExato {
 }
 
 model Questao{
-  id Int @id
+  id Int @id @default(autoincrement())
   enunciado String
 
   cpfAutor String
@@ -59,7 +64,7 @@ model Questao{
 }
 
 model Prova{
-  id Int @id
+  id Int @id @default(autoincrement())
   horarioInicio DateTime
   horarioFim DateTime
   
@@ -68,7 +73,7 @@ model Prova{
 }
 
 model Turma{
-  id Int @id
+  id Int @id @default(autoincrement())
   dataInicio DateTime @default(now())
   dataFim DateTime
   
@@ -81,7 +86,7 @@ model Turma{
 }
 
 model MultiplaEscolha{
-  id Int @id
+  id Int @id @default(autoincrement())
   itemA String
   itemB String
   itemC String
@@ -95,7 +100,7 @@ model MultiplaEscolha{
 }
 
 model Opcao {
-  id Int @id
+  id Int @id @default(autoincrement())
   descricao String //A, B, C, D
   questao MultiplaEscolha[]
 }
