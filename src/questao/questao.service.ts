@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
-import { Prisma } from '@prisma/client';
+import { Prisma, Questao } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CreateExactValue,
@@ -42,6 +42,11 @@ export class QuestaoService extends getCrud<
         },
       },
       include: { certoOuErrado: true },
+    }).catch(err=>{
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        console.log(err.code)
+        console.log(err.message)
+      }
     });
   }
 
@@ -55,5 +60,11 @@ export class QuestaoService extends getCrud<
       },
       include: { valorExato: true },
     });
+  }
+
+  async remove(id: number) {
+    return await this.prisma.questao.delete({
+      where:{id}
+    })
   }
 }
