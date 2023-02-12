@@ -30,8 +30,6 @@ model Usuario {
   
   roles Papel[]
   questoes Questao[]
-  turmasMatriculadas Turma[] @relation("alunos")
-  turmasMinistradas Turma[] @relation("professor")
 }
 
 model CertoOuErrado {
@@ -69,20 +67,6 @@ model Prova{
   horarioFim DateTime
   
   questoes Questao[]
-  turmas Turma[]
-}
-
-model Turma{
-  id Int @id @default(autoincrement())
-  dataInicio DateTime @default(now())
-  dataFim DateTime
-  
-  alunos Usuario[] @relation("alunos")
-  
-  cpfProfessor String
-  professor Usuario @relation("professor", fields:[cpfProfessor], references:[cpf])
-  
-  provas Prova[]
 }
 
 model MultiplaEscolha{
