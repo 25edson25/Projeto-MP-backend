@@ -15,7 +15,7 @@ describe('AuthController', () => {
     nome: 'Teste',
     senha: '123456',
   };
-  const access_token = {acess_token: 'ejg32352faoinq34f'}
+  const access_token = {access_token: 'ejg32352faoinq34f'}
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,7 +31,7 @@ describe('AuthController', () => {
         },
         {
           provide: JwtService, useValue: {
-            signAsync: jest.fn().mockReturnValue(access_token.acess_token)
+            signAsync: jest.fn().mockReturnValue(access_token.access_token)
           }
         },
         {
@@ -45,7 +45,10 @@ describe('AuthController', () => {
     controller = module.get<AuthController>(AuthController);
   });
 
-  it('should return a acess token object', () => {
-    expect(controller.signIn({email: user.email, senha: user.senha})).toEqual(access_token);
+  it('should return a acess token object', async () => {
+    expect(await controller.signIn({email: user.email, senha: user.senha})).toEqual(access_token);
+  });
+  it('should return a user and acess token object', async () => {
+    expect(await controller.signUp({...user, roles:1})).toEqual({user, ...access_token});
   });
 });
