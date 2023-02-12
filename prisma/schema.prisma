@@ -38,7 +38,7 @@ model CertoOuErrado {
   id Int @id @default(autoincrement())
   gabarito Boolean
   idQuestao Int @unique
-  questao Questao @relation(fields:[idQuestao], references:[id]) 
+  questao Questao @relation(fields:[idQuestao], references:[id], onDelete: Cascade) 
 }
 
 model ValorExato {
@@ -46,7 +46,7 @@ model ValorExato {
   gabarito Int
   
   idQuestao Int @unique
-  questao Questao @relation(fields:[idQuestao], references:[id]) 
+  questao Questao @relation(fields:[idQuestao], references:[id], onDelete: Cascade) 
 }
 
 model Questao{
@@ -96,7 +96,7 @@ model MultiplaEscolha{
   gabarito Opcao @relation(fields:[idGabarito], references: [id])
   
   idQuestao Int @unique
-  questao Questao @relation(fields:[idQuestao], references:[id]) 
+  questao Questao @relation(fields:[idQuestao], references:[id], onDelete: Cascade) 
 }
 
 model Opcao {
