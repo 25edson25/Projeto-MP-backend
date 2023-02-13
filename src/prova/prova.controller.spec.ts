@@ -123,7 +123,7 @@ describe('Prova', () => {
       questoes:[
         {id: 1, correct: false},
         {id: 2, correct: true},
-        {id: 3, correct: true}
+        {id: 4, correct: true}
       ]
     })
   });
