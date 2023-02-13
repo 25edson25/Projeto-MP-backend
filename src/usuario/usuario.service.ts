@@ -6,7 +6,7 @@ import { roles } from 'src/app.role';
 
 type UsuarioModel = Prisma.UsuarioDelegate<RejectOptions>;
 const { defaultOptions, getCrud } = new CrudOptions<UsuarioModel>().setOptions(
-  {},
+  {select:{cpf:true, dataNascimento:true, email:true, nome:true, roles:true}},
 );
 
 @Injectable()
@@ -15,10 +15,6 @@ export class UsuarioService extends getCrud<
 >() {
   constructor(protected readonly prisma: PrismaService) {
     super(prisma.usuario, defaultOptions);
-  }
-
-  async findAll() {
-    return await this.prisma.usuario.findMany({include:{roles:true}})
   }
 
   async findByEmail(email: string) {
