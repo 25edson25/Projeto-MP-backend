@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -41,6 +41,10 @@ export class ProvaService extends getCrud<
   }
 
   async corrigeProva(id: number, corrigeProvaDto: CorrigeProvaDto) {
+    console.log(corrigeProvaDto)
+    if (!corrigeProvaDto || !corrigeProvaDto.questoes)
+      throw new BadRequestException('Prova não enviada corretamente')
+
     const provaGabarito = await this.prisma.prova.findUnique({
       where: { id },
       include: {
@@ -58,10 +62,13 @@ export class ProvaService extends getCrud<
 
     return {
       questoes: provaGabarito.questoes.map((questaoGabarito) => {
+        const questaoDoAluno = corrigeProvaDto.questoes.find(
+          (questao) => questao.id == questaoGabarito.id,
+        );
+        if (!questaoDoAluno)
+            return {id: questaoGabarito.id, correct: false}
+
         if (questaoGabarito.certoOuErrado) {
-          const questaoDoAluno = corrigeProvaDto.questoes.find(
-            (questao) => questao.id == questaoGabarito.id,
-          );
           return {
             id: questaoGabarito.id,
             correct:
@@ -69,9 +76,6 @@ export class ProvaService extends getCrud<
               questaoGabarito.certoOuErrado.gabarito,
           };
         } else if (questaoGabarito.valorExato) {
-          const questaoDoAluno = corrigeProvaDto.questoes.find(
-            (questao) => questao.id == questaoGabarito.id,
-          );
           return {
             id: questaoDoAluno.id,
             correct:
@@ -79,9 +83,6 @@ export class ProvaService extends getCrud<
               questaoGabarito.valorExato.gabarito,
           };
         } else if (questaoGabarito.multiplaEscolha) {
-          const questaoDoAluno = corrigeProvaDto.questoes.find(
-            (questao) => questao.id == questaoGabarito.id,
-          );
           return {
             id: questaoDoAluno.id,
             correct:
