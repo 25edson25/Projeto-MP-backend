@@ -1,4 +1,5 @@
 import { Usuario } from '@prisma/client';
+import { Type } from 'class-transformer';
 import { IsDate, IsDateString, IsEmail, IsString } from 'class-validator';
 
 
@@ -11,6 +12,7 @@ export class UsuarioEntity implements Usuario {
   email: string;
   @IsString()
   senha: string;
-  @IsDateString()
+  @IsDate()
+  @Type(()=>Date)
   dataNascimento: Date;
 }

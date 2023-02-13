@@ -15,7 +15,7 @@ export class UsuarioService extends getCrud<
   constructor(protected readonly prisma: PrismaService) {
     super(prisma.usuario, defaultOptions);
   }
-
+  
   async findByEmail(email: string) {
     const user = await this.prisma.usuario.findUnique({
       where: { email },
