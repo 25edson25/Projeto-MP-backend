@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { ProvaService } from './prova.service';
 import { CreateProvaDto } from './dto/create-prova.dto';
+import { CorrigeProvaDto } from './dto/corrige-prova.dto';
 
 @Controller('prova')
 export class ProvaController {
@@ -31,5 +32,10 @@ export class ProvaController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.provaService.remove(+id);
+  }
+
+  @Post('corrige/:id')
+  corrige(@Param('id') id: string, @Body() corrigeProvaDto: CorrigeProvaDto) {
+    return this.provaService.corrigeProva(+id, corrigeProvaDto)
   }
 }

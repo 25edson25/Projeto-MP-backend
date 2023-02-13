@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Test } from '@nestjs/testing';
 import { CreateProvaDto } from './dto/create-prova.dto';
+import { CorrigeProvaDto } from './dto/corrige-prova.dto';
 
 const fakeReturnGetProva: Prisma.ProvaGetPayload<{
   include: {
@@ -66,6 +67,31 @@ const fakeCreateProvaDto: CreateProvaDto = {
   questoesIds: fakeReturnGetProva.questoes.map((e) => ({ id: e.id })),
 };
 
+const fakeCorrigeProvaDto: CorrigeProvaDto = {
+  questoes: [
+    {
+      id: 1,
+      multiplaEscolha: {
+        gabarito: {id: 1}
+      },
+      certoOuErrado: undefined,
+      valorExato: undefined
+    },
+    {
+      id: 2,
+      multiplaEscolha: undefined,
+      certoOuErrado: { gabarito: false },
+      valorExato: undefined,
+    },
+    {
+      id: 4,
+      multiplaEscolha: undefined,
+      certoOuErrado: undefined,
+      valorExato: { gabarito: 3 },
+    },
+  ],
+};
+
 describe('Prova', () => {
   let controller: ProvaController;
 
@@ -79,6 +105,7 @@ describe('Prova', () => {
           useValue: {
             prova: {
               create: jest.fn().mockReturnValue(fakeReturnGetProva),
+              findUnique: jest.fn().mockReturnValue(fakeReturnGetProva)
             },
           },
         },
@@ -89,5 +116,15 @@ describe('Prova', () => {
   it('should return a Prova', async () => {
     const response = await controller.create(fakeCreateProvaDto);
     expect(response).toBe(fakeReturnGetProva);
+  });
+  it('should correct the test', async () => {
+    const response = await controller.corrige('1', fakeCorrigeProvaDto);
+    expect(response).toEqual({
+      questoes:[
+        {id: 1, correct: false},
+        {id: 2, correct: true},
+        {id: 3, correct: true}
+      ]
+    })
   });
 });

@@ -3,6 +3,7 @@ import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProvaDto } from './dto/create-prova.dto';
+import { CorrigeProvaDto } from './dto/corrige-prova.dto';
 
 type ProvaModel = Prisma.ProvaDelegate<RejectOptions>;
 const { defaultOptions, getCrud } = new CrudOptions<ProvaModel>().setOptions(
@@ -26,5 +27,9 @@ export class ProvaService extends getCrud<
         },
       },
     });
+  }
+
+  async corrigeProva(id: number, corrigeProvaDto: CorrigeProvaDto) {
+
   }
 }
