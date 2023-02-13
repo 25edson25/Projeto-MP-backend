@@ -24,11 +24,23 @@ export class UsuarioController {
     return this.usuarioService.findAll();
   }
 
+  @UseGuards(AuthGuard('jwt'),ACGuard)
+  @UseRoles({
+    action:'read',
+    possession: 'own',
+    resource: 'usuario'
+  })
   @Get(':cpf')
   findOne(@Param('cpf') cpf: string) {
     return this.usuarioService.findOne(cpf);
   }
 
+  @UseGuards(AuthGuard('jwt'),ACGuard)
+  @UseRoles({
+    action:'delete',
+    possession: 'any',
+    resource: 'usuario'
+  })
   @Delete(':cpf')
   remove(@Param('cpf') cpf: string) {
     return this.usuarioService.remove(cpf);

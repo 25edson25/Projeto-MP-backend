@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
-import { Prisma, Questao } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CreateExactValue,
@@ -10,7 +10,7 @@ import {
 
 type QuestaoModel = Prisma.QuestaoDelegate<RejectOptions>;
 const { defaultOptions, getCrud } = new CrudOptions<QuestaoModel>().setOptions(
-  {},
+  {select:{id:true, cpfAutor:true, enunciado:true, certoOuErrado:true, multiplaEscolha:true, valorExato:true}},
 );
 
 @Injectable()

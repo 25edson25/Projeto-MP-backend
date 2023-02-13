@@ -6,9 +6,16 @@ import { CreateProvaDto } from './dto/create-prova.dto';
 import { CorrigeProvaDto } from './dto/corrige-prova.dto';
 
 type ProvaModel = Prisma.ProvaDelegate<RejectOptions>;
-const { defaultOptions, getCrud } = new CrudOptions<ProvaModel>().setOptions(
-  {},
-);
+const { defaultOptions, getCrud } = new CrudOptions<ProvaModel>().setOptions({
+  select: {
+    id: true,
+    horarioInicio: true,
+    horarioFim: true,
+    questoes: {
+      include: { certoOuErrado: true, multiplaEscolha: true, valorExato: true },
+    },
+  },
+});
 
 @Injectable()
 export class ProvaService extends getCrud<
@@ -21,11 +28,15 @@ export class ProvaService extends getCrud<
   async create(createProvaDto: CreateProvaDto) {
     return await this.prisma.prova.create({
       data: {
-        ...createProvaDto,
+        horarioInicio: createProvaDto.horarioInicio,
+        horarioFim: createProvaDto.horarioFim,
         questoes: {
-          connect: createProvaDto.questoesIds.map((e) => ({ id: e.id })),
+          connect: createProvaDto.questoesIds.map((e) => {
+            return { id: e.id };
+          }),
         },
       },
+      ...defaultOptions
     });
   }
 

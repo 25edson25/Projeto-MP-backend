@@ -7,11 +7,13 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.role';
+import { ProvaModule } from './prova/prova.module';
 
 @Module({
   imports: [
     PrismaModule,
     QuestaoModule,
+    ProvaModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     AccessControlModule.forRoles(roles)
