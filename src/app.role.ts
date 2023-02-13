@@ -11,7 +11,7 @@ export enum AppRoles {
   
   roles
     .grant(AppRoles.ESTUDANTE)
-        .readOwn('prova')
+        .readAny('prova')
     .grant(AppRoles.PROFESSOR)
         .create('questao')
         .create('prova')

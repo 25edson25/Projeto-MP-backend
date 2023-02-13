@@ -63,7 +63,7 @@ const fakeReturnGetProva: Prisma.ProvaGetPayload<{
 
 const fakeCreateProvaDto: CreateProvaDto = {
   ...fakeReturnGetProva,
-  questoes: fakeReturnGetProva.questoes.map((e) => ({ id: e.id })),
+  questoesIds: fakeReturnGetProva.questoes.map((e) => ({ id: e.id })),
 };
 
 describe('Prova', () => {
@@ -77,7 +77,9 @@ describe('Prova', () => {
         {
           provide: PrismaService,
           useValue: {
-            create: jest.fn().mockReturnValue(fakeReturnGetProva),
+            prova: {
+              create: jest.fn().mockReturnValue(fakeReturnGetProva),
+            },
           },
         },
       ],

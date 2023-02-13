@@ -3,13 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
 } from '@nestjs/common';
 import { ProvaService } from './prova.service';
 import { CreateProvaDto } from './dto/create-prova.dto';
-import { UpdateProvaDto } from './dto/update-prova.dto';
 
 @Controller('prova')
 export class ProvaController {
@@ -28,11 +26,6 @@ export class ProvaController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.provaService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProvaDto: UpdateProvaDto) {
-    return this.provaService.update(+id, updateProvaDto);
   }
 
   @Delete(':id')
