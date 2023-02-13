@@ -49,6 +49,6 @@ describe('AuthController', () => {
     expect(await controller.signIn({email: user.email, senha: user.senha})).toEqual(access_token);
   });
   it('should return a user and acess token object', async () => {
-    expect(await controller.signUp({...user, roles:1})).toEqual({user, ...access_token});
+    expect(await controller.signUp({...user, roles:2})).toEqual({user, ...access_token});
   });
 });
