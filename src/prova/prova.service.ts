@@ -45,7 +45,6 @@ export class ProvaService extends getCrud<
   }
 
   async corrigeProva(id: number, corrigeProvaDto: CorrigeProvaDto) {
-    console.log(corrigeProvaDto);
     if (!corrigeProvaDto || !corrigeProvaDto.questoes)
       throw new BadRequestException('Prova não enviada corretamente');
 
