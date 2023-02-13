@@ -30,7 +30,7 @@ export class QuestaoController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.questaoService.remove(+id)
+    return this.questaoService.remove(+id);
   }
 
   @Post('multipla-escolha')

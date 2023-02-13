@@ -1,58 +1,65 @@
 import { Prisma } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDefined, IsInt, IsNumber, ValidateNested } from 'class-validator';
-
+import {
+  IsBoolean,
+  IsDefined,
+  IsInt,
+  IsNumber,
+  ValidateNested,
+} from 'class-validator';
 
 class Id {
   @IsNumber()
-  id:number
+  id: number;
 }
 
 class GabaritoMultiplaEscolha {
   @IsDefined()
   @ValidateNested()
-  @Type(()=> Id)
-  gabarito : Id 
+  @Type(() => Id)
+  gabarito: Id;
 }
 
 class GabaritoCertoOuErrado {
   @IsBoolean()
   @IsDefined()
-  gabarito : boolean
+  gabarito: boolean;
 }
 
 class GabaritoValorExato {
   @IsInt()
-  gabarito : number
+  gabarito: number;
 }
 
-class Questao implements Prisma.QuestaoGetPayload<{
-  select: {
-    id: true;
-    multiplaEscolha: { select: { gabarito: {select:{id:true}} } };
-    certoOuErrado: { select: { gabarito: true } };
-    valorExato: { select: { gabarito: true } };
-  };
-}> {
+class Questao
+  implements
+    Prisma.QuestaoGetPayload<{
+      select: {
+        id: true;
+        multiplaEscolha: { select: { gabarito: { select: { id: true } } } };
+        certoOuErrado: { select: { gabarito: true } };
+        valorExato: { select: { gabarito: true } };
+      };
+    }>
+{
   @IsNumber()
   id: number;
 
   @ValidateNested()
-  @Type(()=>GabaritoMultiplaEscolha)
+  @Type(() => GabaritoMultiplaEscolha)
   multiplaEscolha: GabaritoMultiplaEscolha;
 
   @ValidateNested()
-  @Type(()=>GabaritoCertoOuErrado)
+  @Type(() => GabaritoCertoOuErrado)
   certoOuErrado: GabaritoCertoOuErrado;
 
   @ValidateNested()
-  @Type(()=>GabaritoValorExato)
+  @Type(() => GabaritoValorExato)
   valorExato: GabaritoValorExato;
 }
 
 export class CorrigeProvaDto {
-  @ValidateNested({each:true})
-  @Type(()=> Questao)
+  @ValidateNested({ each: true })
+  @Type(() => Questao)
   questoes: Questao[];
 }
-

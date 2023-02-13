@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ProvaService } from './prova.service';
 import { CreateProvaDto } from './dto/create-prova.dto';
 import { CorrigeProvaDto } from './dto/corrige-prova.dto';
@@ -36,6 +29,6 @@ export class ProvaController {
 
   @Post('corrige/:id')
   corrige(@Param('id') id: string, @Body() corrigeProvaDto: CorrigeProvaDto) {
-    return this.provaService.corrigeProva(+id, corrigeProvaDto)
+    return this.provaService.corrigeProva(+id, corrigeProvaDto);
   }
 }

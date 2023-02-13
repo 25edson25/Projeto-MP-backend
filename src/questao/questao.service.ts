@@ -9,9 +9,16 @@ import {
 } from './dto/create-questao.dto';
 
 type QuestaoModel = Prisma.QuestaoDelegate<RejectOptions>;
-const { defaultOptions, getCrud } = new CrudOptions<QuestaoModel>().setOptions(
-  {select:{id:true, cpfAutor:true, enunciado:true, certoOuErrado:true, multiplaEscolha:true, valorExato:true}},
-);
+const { defaultOptions, getCrud } = new CrudOptions<QuestaoModel>().setOptions({
+  select: {
+    id: true,
+    cpfAutor: true,
+    enunciado: true,
+    certoOuErrado: true,
+    multiplaEscolha: true,
+    valorExato: true,
+  },
+});
 
 @Injectable()
 export class QuestaoService extends getCrud<

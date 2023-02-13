@@ -16,7 +16,7 @@ import { ProvaModule } from './prova/prova.module';
     ProvaModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    AccessControlModule.forRoles(roles)
+    AccessControlModule.forRoles(roles),
   ],
   controllers: [AppController],
   providers: [AppService],

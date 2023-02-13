@@ -5,7 +5,7 @@ import { ProvaEntity } from '../entities/prova.entity';
 
 class Id {
   @IsNumber()
-  id: number
+  id: number;
 }
 
 export class CreateProvaDto extends PickType(ProvaEntity, [
@@ -13,9 +13,7 @@ export class CreateProvaDto extends PickType(ProvaEntity, [
   'horarioFim',
 ]) {
   @IsArray()
-  @ValidateNested({each:true})
-  @Type(()=>Id)
-  questoesIds: Id[]
+  @ValidateNested({ each: true })
+  @Type(() => Id)
+  questoesIds: Id[];
 }
-
-

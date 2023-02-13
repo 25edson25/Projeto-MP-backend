@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CrudOptions, RejectOptions } from '@cjr-unb/super-crud';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -36,14 +40,14 @@ export class ProvaService extends getCrud<
           }),
         },
       },
-      ...defaultOptions
+      ...defaultOptions,
     });
   }
 
   async corrigeProva(id: number, corrigeProvaDto: CorrigeProvaDto) {
-    console.log(corrigeProvaDto)
+    console.log(corrigeProvaDto);
     if (!corrigeProvaDto || !corrigeProvaDto.questoes)
-      throw new BadRequestException('Prova não enviada corretamente')
+      throw new BadRequestException('Prova não enviada corretamente');
 
     const provaGabarito = await this.prisma.prova.findUnique({
       where: { id },
@@ -65,8 +69,7 @@ export class ProvaService extends getCrud<
         const questaoDoAluno = corrigeProvaDto.questoes.find(
           (questao) => questao.id == questaoGabarito.id,
         );
-        if (!questaoDoAluno)
-            return {id: questaoGabarito.id, correct: false}
+        if (!questaoDoAluno) return { id: questaoGabarito.id, correct: false };
 
         if (questaoGabarito.certoOuErrado) {
           return {

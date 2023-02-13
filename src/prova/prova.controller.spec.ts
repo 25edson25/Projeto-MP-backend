@@ -72,10 +72,10 @@ const fakeCorrigeProvaDto: CorrigeProvaDto = {
     {
       id: 1,
       multiplaEscolha: {
-        gabarito: {id: 1}
+        gabarito: { id: 1 },
       },
       certoOuErrado: undefined,
-      valorExato: undefined
+      valorExato: undefined,
     },
     {
       id: 2,
@@ -105,7 +105,7 @@ describe('Prova', () => {
           useValue: {
             prova: {
               create: jest.fn().mockReturnValue(fakeReturnGetProva),
-              findUnique: jest.fn().mockReturnValue(fakeReturnGetProva)
+              findUnique: jest.fn().mockReturnValue(fakeReturnGetProva),
             },
           },
         },
@@ -120,11 +120,11 @@ describe('Prova', () => {
   it('should correct the test', async () => {
     const response = await controller.corrige('1', fakeCorrigeProvaDto);
     expect(response).toEqual({
-      questoes:[
-        {id: 1, correct: false},
-        {id: 2, correct: true},
-        {id: 4, correct: true}
-      ]
-    })
+      questoes: [
+        { id: 1, correct: false },
+        { id: 2, correct: true },
+        { id: 4, correct: true },
+      ],
+    });
   });
 });

@@ -21,8 +21,8 @@ export class UsuarioService {
 
   async create(usuarioArgs: Prisma.UsuarioCreateArgs['data']) {
     return await this.prisma.usuario.create({
-      data: usuarioArgs
-    })
+      data: usuarioArgs,
+    });
   }
 
   async findOne(cpf: string) {
@@ -36,16 +36,16 @@ export class UsuarioService {
     return user;
   }
 
-  async findAll(){
+  async findAll() {
     return await this.prisma.usuario.findMany({
-     include:{roles:true} 
-    })
+      include: { roles: true },
+    });
   }
 
-  async remove (cpf: string) {
+  async remove(cpf: string) {
     return await this.prisma.usuario.delete({
-      where:{cpf}
-    })
+      where: { cpf },
+    });
   }
 
   async findByEmail(email: string) {
